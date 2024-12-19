@@ -4,6 +4,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,38 +13,35 @@ import javax.swing.JTextField;
 
 public class Calculator {
 	
-	/* public static String resultat(String x) {
-  	   
-  	   String fin="";//le variable de stockage de la resultat
-  	   int n=x.length();//la taille de l'operation
-  	   
-  	   //la liste des operateurs
-  	   ArrayList<String> operateur= new ArrayList<>();
-  	   operateur.add("+");operateur.add("-");operateur.add("/");operateur.add("*");
-  	   int o=operateur.size();
-  	   
-  	   //la liste ou se stock loperation sans espace
-  	   ArrayList<String> liste= new ArrayList<>();
-  	   
-  	   //le traitement
-  	   if(x.isEmpty()) {fin="";}
-  	   else if(operateur.contains(x.indexOf(0)) || operateur.contains(x.indexOf(o-1))) {fin="ERREUR! SYNTAX INVALID !";}
-  	   else {
-  		   //verifier si les operateurs sont successives
-  		   
-  		   //supprimer les espaces
-  		  for(int i=0;i<n;i++) {
-  			   if(x.indexOf(i)!=-1) {liste.add(String.valueOf(x.charAt(i)));}
-  		   }
-  		   int l=liste.size();
-  		    for(int i=0;i<) {}
-  		   
-   
-  	   }
+	public static String resultat(String x) {
+	    try { String result="";
+	          List<Character> l = new ArrayList<>();
+	        
+	        for(int i=0;i<x.length();i++) {
+	        	if(x.charAt(i)!=' ') {
+	        		l.add(x.charAt(i));
+	        	}
+	        }
+	        int fin;
+	        int o1 = Character.getNumericValue(l.get(0)); 
+            int o2 = Character.getNumericValue(l.get(2));
+            char operator = l.get(1);
+	        switch  (operator) {
+	        case '*': fin=o1*o2; break;
+	        case '+': fin=o1+o2; break;
+	        case '-': fin=o1-o2; break;
+	        case '/': fin=o1/o2; break;
+	        default:
+                return "ERREUR! OPÉRATEUR NON VALIDE!";
+	        }
+	        result=String.valueOf(fin);
+	        return result;
+	    } catch (Exception e) {
+	        
+	        return "ERREUR! IMPOSSIBLE D'ÉVALUER!";
+	    }
+	}
 
-      	return fin;
-			
-		}*/
 
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
@@ -55,7 +53,7 @@ public class Calculator {
 		frame.setLayout(new FlowLayout(FlowLayout.LEFT, 50, 20));
 		JLabel input = new JLabel("Enter the operation :");
 		
-		JTextField textField = new JTextField(22);
+		JTextField textField = new JTextField(50);
 		
 		
 		//la fonction qui fait le calcule
@@ -147,7 +145,7 @@ public class Calculator {
 		btnPLUS.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		    	String operation=textField.getText();
-		    	textField.setText(operation + " + ");;
+		    	textField.setText(operation + " + ");
 		       
 		        
 		    }
@@ -155,7 +153,7 @@ public class Calculator {
 		btnMULTI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String operation=textField.getText();
-				textField.setText(operation + " * ");;
+				textField.setText(operation + " * ");
 				
 				
 			}
@@ -163,7 +161,7 @@ public class Calculator {
 		btnMOIN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String operation=textField.getText();
-				textField.setText(operation + " - ");;
+				textField.setText(operation + " - ");
 				
 				
 			}
@@ -171,7 +169,7 @@ public class Calculator {
 		btnDIV.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String operation=textField.getText();
-				textField.setText(operation + " / ");;
+				textField.setText(operation + " / ");
 				
 				
 			}
@@ -181,8 +179,9 @@ public class Calculator {
 		JLabel input2 = new JLabel();
 		btnEGAL.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String operation=resultat(textField.getText());
-				input2.setText(operation);
+				
+				String operation=textField.getText();
+				textField.setText(operation +" = "+resultat(operation) );
 				
 				
 			}
